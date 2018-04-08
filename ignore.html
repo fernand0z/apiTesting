@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Vacation API Testing</title>
+  <style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Location Info</h1>
+
+      <div id="google-stuff">
+      
+      <!-- Rendered Buttons will get Dumped Here  -->
+      <div id="buttons-view"></div>
+
+      <form id="type-form">
+        <label for="type-input">Explore a different cateogry</label>
+        <input type="text" id="type-input">
+        <br>
+
+        <!-- Button triggers new type/category to be added -->
+        <input id="add-category" type="submit" value="Add a category">
+      </form>
+        
+      <!-- results will Get Dumped Dere -->
+      <div id="results-view"></div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script type="text/javascript">
+
+        var category = ["Lodging", "Restaurant"];
+        var type = "&type=" + category;
+
+        // Display results info
+        function displayResultsInfo() {
+
+          var city = ["Honolulu, HI"];
+          var latitude = '21.276';
+          var longitude = '-157.820';
+          var location = "location=" + latitude + "," + longitude + "&radius=500";
+          //var category = ["Lodging", "Restaurant"];
+          //var type = "&type=" + category;
+          var urlKey = "&key=AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc";
+          //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=33.303,-111.838&radius=500&type=lodging&key=AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc
+
+          var queryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + location + type + urlKey;
+          console.log(queryURL);
+
+          // Creating an AJAX call for the specific movie button being clicked
+          $.ajax({
+            url: queryURL,
+            method: "GET"
+          }).then(function (response) {
+
+            for (var r = 0; r < response.results.length; r++) {
+              console.log(response);
+              console.log(response.results[r].name);
+              // Creating a div to hold the movie
+              var resultsDiv = $("<div class='results'>");
+              
+              // Set a variable to the place name from the API
+              var placeName = response.results[r].name;
+              // Creating an element to have the name displayed
+              var pName = $("<p>").text("Name: " + placeName);
+              var vicinity = response.results[r].vicinity;
+              var pVicinity = $("<p>").text("Vicinity: " + vicinity);
+
+              // // https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAAPq7bOqj7eU2x1lKCRisXylg6lC9_BFrt4DLxjuF5cRICRUtr3yaSaMu2YBoFV8pSPuHoWB5yobXg6Wjy-pQ6MoKUB7FORuPxI48K24SaVsJHjZqGarOMIeFwj1nKFmHpEhApcxHwso7aD666CHzqAw4BGhTwt9KPMnX022zMTmms0T6y-ZDFkg&key=AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc
+              var picID = response.results[r].photos[0].photo_reference;
+              var picHTML = $("<img>");
+              picHTML.attr("src", "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + picID + "&key=AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc");
+              
+              //Combine all of the results sections into the resultsDiv
+              resultsDiv.append(pName, pVicinity, picHTML);
+
+              //Update the page with the results
+              $("#results-view").append(resultsDiv);
+              //$("#results-view").prepend(text(category[0]));
+            }
+          
+          // Function for displaying category data
+          function renderButtons() {
+
+            // Deleting the movies prior to adding new movies
+            // (this is necessary otherwise you will have repeat buttons)
+            $("#results-view").empty();
+
+            // Looping through the array of movies
+            for (var i = 0; i < category.length; i++) {
+
+              // Then dynamicaly generating buttons for each category in the array
+              // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+              var a = $("<button>");
+              // Adding a class of movie-btn to our button
+              a.addClass("cateogry-btn");
+              // Adding a data-attribute
+              a.attr("data-name", category[i]);
+              // Providing the initial button text
+              a.text(category[i]);
+              // Adding the button to the buttons-view div
+              $("#buttons-view").append(a);
+              }
+          };
+              // This function handles events where a movie button is clicked
+              $("#add-category").on("click", function (event) {
+                event.preventDefault();
+                // This line grabs the input from the textbox
+                var categoryType = $("#type-input").val().trim();
+
+                // Adding movie from the textbox to our array
+                category.push(categoryType);
+
+                // Calling renderButtons which handles the processing of our movie array
+                
+              });
+            });
+          
+          // Adding a click event listener to all elements with a class of "movie-btn"
+          $(document).on("click", ".category-btn", displayResultsInfo);
+        };
+            
+          // Calling the renderButtons function to display the intial buttons
+          
+          displayResultsInfo();
+          
+
+      </script>
+    </div>
+    </div>
+</body>
+
+</html>
