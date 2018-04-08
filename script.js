@@ -98,7 +98,7 @@ $(document).ready(function () {
 
     //OpenWeatherMap API
     var weatherAPIKey = "743a4ef3c30935fe19ecbad14f631fae";
-    var weatherQueryURL = "http://api.openweathermap.org/data/2.5/weather?q=" +city + "&APPID=" + weatherAPIKey;
+    var weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +city + "&APPID=" + weatherAPIKey;
             console.log(weatherQueryURL);
 
             // Performing our AJAX GET request
@@ -122,7 +122,7 @@ $(document).ready(function () {
                         var pTemp = $("<p>").text("Temp: " + tempF + "F");
                         // Set a variable to the icon code for the current weather
                         var iconCode = response.weather[0].icon;
-                        var iconURL = "http://openweathermap.org/img/w/" + iconCode + ".png";
+                        var iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
                         console.log(iconURL);
                         var iconHTML = $("<img>");
                         iconHTML.attr("src", iconURL);
