@@ -3,11 +3,46 @@ $(document).ready(function () {
     //Initial array of search types for specified location
     var searchTypes = ["Lodging", "Restaurants", "Parks", "Bars", "Banks"];
     var city = ["Honolulu"];
+    var lat;
+    var lon;
+    var c = document.getElementById("citySearch").value;
+    console.log("Script City: " + c);
+
+    $("#citySubmit").on("click", function () {
+        console.log("Hello");
+        var googleAPIkey = "AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc";
+        c = $("#citySearch").val();
+        var endpoint = "https://maps.googleapis.com/maps/api/geocode/json?address=" + c + "&key=" + googleAPIkey;
+        console.log("Endpoint: " + endpoint);
+
+        this.endpoint = endpoint;
+        $.ajax({
+            url: this.endpoint,
+            type: "GET", // The HTTP Method
+            data: {}, // Additional parameters here
+            dataType: "json",
+            error: function (err) {
+                console.log(err);
+            }
+            /**,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("X-Mashape-Authorization", mashapeauthkey);
+            }**/
+        }).done(function (data) {
+            console.log(data);
+            var latitude = data.results[0].geometry.location.lat;
+            var longitude = data.results[0].geometry.location.lng;
+            $("#result").html("Search for: " + c + "<hr>" + "Lat: " + latitude + ", Lng: " + longitude);
+            lat = latitude;
+            lon = longitude;
+            
+        });
+    });
+
 
     //function to display search category buttons to the page
     function renderButtons() {
         $("#buttons").empty();
-
         //loop through the array of types/categories
         for (var i = 0; i < searchTypes.length; i++) {
 
@@ -44,11 +79,12 @@ $(document).ready(function () {
             //Possibly unecessary
             //function displayResultsInfo() {
 
-            var city = ["Honolulu, HI"];
-            var latitude = '21.276';
-            var longitude = '-157.820';
+            var city = [];
+            var latitude = lat;
+            var longitude = lon;
             var location = "&location=" + latitude + "," + longitude + "&radius=500";
             var urlKey = "&key=AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc";
+            var resultsNum = $("#number").value;
             //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=33.303,-111.838&radius=500&type=lodging&key=AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc
             var queryURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + category + location + urlKey;
             console.log(queryURL);
@@ -63,9 +99,13 @@ $(document).ready(function () {
                     // Storing an array of results in the results variable
                     var resultData = response.results;
                     console.log(resultData);
+                    x = document.getElementById("number").value;
+                    console.log("Input number: " + x);
+                    // var searchNum = $("#number").val();
+                    // console.log("Search Results: " + searchNum);
                     // Looping over every result item
-                    for (var i = 0; i < resultData.length; i++) {
-
+                    for (var i = 0; i < x; i++) {
+                        //    for (var i = 0; i < resultData.length; i++) {
                         // Creating a var for the result display section of the page
                         var resultDiv = $("<div class='result-divs'>");
 
@@ -94,44 +134,44 @@ $(document).ready(function () {
         });
     };
     // Calling the renderButtons function to display the intial buttons
-    
+
 
     //OpenWeatherMap API
     var weatherAPIKey = "743a4ef3c30935fe19ecbad14f631fae";
-    var weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +city + "&APPID=" + weatherAPIKey;
-            console.log(weatherQueryURL);
+    var weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + weatherAPIKey;
+    console.log(weatherQueryURL);
 
-            // Performing our AJAX GET request
-            $.ajax({
-                url: weatherQueryURL,
-                method: "GET"
-            })
-                // After the data comes back from the API
-                .then(function (response) {
-                    // Storing an array of results in the results variable
-                    var weatherData = response.weather;                
-                    //A div to hold the weather data
-                    var weatherDiv = $("<div class='weather-divs'>");
+    // Performing our AJAX GET request
+    $.ajax({
+        url: weatherQueryURL,
+        method: "GET"
+    })
+        // After the data comes back from the API
+        .then(function (response) {
+            // Storing an array of results in the results variable
+            var weatherData = response.weather;
+            //A div to hold the weather data
+            var weatherDiv = $("<div class='weather-divs'>");
 
-                        // Set a variable to the temp from the API
-                        var placeTemp = response.main.temp;
-                        console.log(placeTemp);
-                        //convert temp from Kelvin to Fahrenheit
-                        var tempF = Math.floor(placeTemp * (9/5) - 459.67);
-                        // Creating an element to have the temp displayed
-                        var pTemp = $("<p>").text("Temp: " + tempF + "F");
-                        // Set a variable to the icon code for the current weather
-                        var iconCode = response.weather[0].icon;
-                        var iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
-                        console.log(iconURL);
-                        var iconHTML = $("<img>");
-                        iconHTML.attr("src", iconURL);
-                        iconHTML.attr("class", "weather-icon");
-                        //Update weather div with the temp and weather icon
-                        weatherDiv.append(pTemp, iconHTML);
-                        //Update page with the weather div content
-                        $("#form-div").append(weatherDiv);
-                });
-            
-            renderButtons();
+            // Set a variable to the temp from the API
+            var placeTemp = response.main.temp;
+            console.log(placeTemp);
+            //convert temp from Kelvin to Fahrenheit
+            var tempF = Math.floor(placeTemp * (9 / 5) - 459.67);
+            // Creating an element to have the temp displayed
+            var pTemp = $("<p>").text("Temp: " + tempF + "F");
+            // Set a variable to the icon code for the current weather
+            var iconCode = response.weather[0].icon;
+            var iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
+            console.log(iconURL);
+            var iconHTML = $("<img>");
+            iconHTML.attr("src", iconURL);
+            iconHTML.attr("class", "weather-icon");
+            //Update weather div with the temp and weather icon
+            weatherDiv.append(pTemp, iconHTML);
+            //Update page with the weather div content
+            $("#form-div").append(weatherDiv);
+        });
+
+renderButtons();
 });

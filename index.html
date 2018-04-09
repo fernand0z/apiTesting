@@ -20,6 +20,41 @@
             <div id="buttons" class="col-sm-12 col-md-8">
             </div>
             <div id="form-div" class="col-sm-12 col-md-4">
+
+                    <p>Number of results between 1 and 20</p> 
+                    <input id="number" value="20">
+                    <button id="search-button" type="button" onclick="myFunction()">Submit</button>
+                    <p id="number-input"></p>
+                    <script>
+                    function myFunction() {
+                    var x, text;
+                    // Get the value of the input field with id="numb"
+                    x = document.getElementById("number").value;
+                    console.log("Input number: " + x);
+                    // If x is Not a Number or less than one or greater than 10
+                    if (isNaN(x) || x < 1 || x > 20) {
+                    text = "Input not valid";
+                    } else {
+                    text = "Input OK";
+                    }
+                    document.getElementById("number-input").innerHTML = text;
+                    }
+                    </script>
+
+                    
+                    <p>Enter a city to search</p>
+                    <input id ="citySearch" value="Phoenix, AZ">
+                    <button id="citySubmit" type="button" >Submit</button>
+                    <script>
+                    function cityFunction() {
+                    var c = document.getElementById("citySearch").value;
+                    console.log("City entered: " + c);
+                    
+                    }
+                    </script>
+                    <div id="result"></div>
+                    
+                    
                 <!-- <form id="search-form" class="navbar-form navbar-left">
                     <div class="form-group">
                         <label for="search-input">Add another location category:</label>
