@@ -24,10 +24,7 @@ $(document).ready(function () {
             error: function (err) {
                 console.log(err);
             }
-            /**,
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader("X-Mashape-Authorization", mashapeauthkey);
-            }**/
+
         }).done(function (data) {
             console.log(data);
             var latitude = data.results[0].geometry.location.lat;
