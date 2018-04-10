@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster|Passion+One');
+
+nav form {
+    width: 25%;
+}
+
+.brand-logo { 
+    font-family: 'Passion One';
+    letter-spacing: .75px;
+    font-size: 34px !important;
+}
+
+#home-carousel, .main-container {
+    margin-bottom: 0;
+}
+
+.main-container {
+    margin: 0 auto;
+    padding: 20px;
+    width: 80%;
+}
+.main-container .row{
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+}
+.container {
+    margin: 0 auto;
+    padding: 0;
+}
+
+main .row {
+    margin: 0 auto;
+}
+
+
+#car-item-1 img{
+    height: 500px;
+
+}
+#car-item-2 img{
+    height: 500px;
+}
+#car-item-3 img{
+    height: 500px;
+
+}
+#car-item-4 img{
+    height: 500px;
+}
+
+
+
+.main-cities-text {
+    font-family: lobster;
+    font-size: 36px;
+    margin: 0;
+}
+
+#inside-container {
+    padding: 0 75px;
+}
+#city-main-pic {
+    position: relative;
+}
+#city-main-pic img{
+    position: relative;
+
+    border-radius: 2.5px;
+}
+
+#city-main-pic-text { 
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+    background-color: rgba(0,0,0,0.8);
+    font-family: 'lobster';
+    font-size: 48px;
+    padding: 5px 10%;
+    border-radius: 2.5px; 
+}
+#city-container p {
+    position: relative;
+
+    padding: 5px;
+    /*border: 3px solid black;*/
+    border-radius: 5px;
+
+    margin: 0 -5px;
+}
+
+
+.col .weather{
+    padding-left: 0;
+}
+.weather .card{
+    padding-left: 0;
+
+    background-image: url('../images/weather-background.png');
+}
+
+#degree-F {
+    font-size: 24px;
+    position: absolute;
+    top: 25px;
+}
+#degree-num {
+    font-size: 72px;
+}
+#weather-icon {
+   margin-left: 10px;
+}
+
+
+.food-pics .row, .food-pics .col {
+    padding: 0;
+}
+
+.food-pics .rand-food-pic {
+    position: relative;
+}
+.food-pics img {
+    border-radius: 2.5px;
+    border: 1px solid white;
+}
+.food-pics p {
+    position: absolute;
+    top: 25px;
+}
+
+
+.resturaunt .col{
+    padding-right: 0;
+}
+
+
+
+/*
+  These rules take effect when the browser's width
+  is either 768px or less.
+*/
+@media screen and (max-width: 992px) {
+    /* The outside container goes away on the tablet/phone */
+    .main-container {
+        width: 100%;
+    }
+    #inside-container {
+        padding: 0 25px;
+    }
+
+
+    #car-item-1 img{
+        height: 450px;
+    
+    }
+    #car-item-2 img{
+        height: 450px;
+    }
+    #car-item-3 img{
+        height: 450px;
+    
+    }
+    #car-item-4 img{
+        height: 450px;
+    }
+
+    .weather .col{
+        padding: 0 5px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* The outside container goes away on the tablet/phone */
+    .main-container {
+        width: 100%;
+        padding: 0px;
+    }
+    #inside-container {
+        padding: 0 5px;
+    }
+
+    .city-main-pic-text {
+        font-size: 10px !important;
+    }
+
+    
+}
+
+
+
+
+
+
+/* Materialize */
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
+}
+

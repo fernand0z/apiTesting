@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster|Passion+One');
+
+.brand-logo { 
+    font-family: 'Passion One';
+    letter-spacing: .75px;
+    font-size: 34px !important;
+}
+
+#car-item-1 img{
+    height: 550px;
+
+}
+#car-item-2 img{
+    height: 550px;
+}
+#car-item-3 {
+    
+}
+#car-item-4 {
+   
+}
+
+
+#city-name {
+    position: fixed;
+    top: 50px;
+    
+    font-family: 'lobster';
+    
+}
+
+
+/* Materialize */
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
+}
